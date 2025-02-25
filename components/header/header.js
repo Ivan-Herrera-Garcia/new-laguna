@@ -21,24 +21,33 @@ export default function Header() {
           />
         </div>
 
-        {/* Menú para escritorio */}
-        <nav className="hidden md:flex space-x-6 text-lg">
-          {['proyectos', 'inmuebles', 'nosotros', 'servicios', 'contacto'].map((item) => (
-            <ScrollLink 
-              key={item} 
-              to={item} 
-              smooth={true} 
-              duration={700} 
-              className="cursor-pointer hover:text-gray-400"
-            >
-                {
-                    item == 'inmuebles' ? 
-                        <Link target="_blank" href={"https://app.nocnok.com/crm/155882/agents/79954/"} alt="Inmuebles">Inmuebles</Link> :
-                        item.charAt(0).toUpperCase() + item.slice(1)
-                }
-            </ScrollLink>
-          ))}
-        </nav>
+       {/* Menú para escritorio */}
+        <div className="hidden md:flex space-x-6 text-lg">
+          {["proyectos", "inmuebles", "nosotros", "servicios", "contacto"].map((item) =>
+            item === "inmuebles" ? (
+              <Link
+                key={item}
+                href="https://app.nocnok.com/crm/155882/agents/79954/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer hover:text-gray-400"
+              >
+                Inmuebles
+              </Link>
+            ) : (
+              <ScrollLink
+                key={item}
+                to={item}
+                smooth={true}
+                duration={700}
+                className="cursor-pointer hover:text-gray-400"
+              >
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </ScrollLink>
+            )
+          )}
+        </div>
+
 
         {/* Botón menú móvil */}
         <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
@@ -50,6 +59,18 @@ export default function Header() {
       {isOpen && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-gray-800 p-4 flex flex-col items-center space-y-4 z-50">
           {['proyectos', 'inmuebles', 'nosotros', 'servicios', 'contacto'].map((item) => (
+
+            item === 'inmuebles' ?
+            <Link 
+              key={item} 
+              href="https://app.nocnok.com/crm/155882/agents/79954/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="cursor-pointer hover:text-gray-400"
+              onClick={() => setIsOpen(false)}
+            >
+              Inmuebles
+            </Link> :
             <ScrollLink 
               key={item} 
               to={item} 
