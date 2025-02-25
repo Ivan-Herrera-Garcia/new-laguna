@@ -63,7 +63,7 @@ export default function Body() {
     if (id === "ubicacion")
       return (
         <iframe
-          className="w-full h-96 mt-4"
+          className="w-full h-96 mt-4 rounded-b-md"
           src="https://www.google.com/maps/embed?pb=!4v1740443162595!6m8!1m7!1ss7qH73lUld3_Zza2siG7Bg!2m2!1d25.5350949817077!2d-103.4342796972423!3f271.3952523268396!4f0!5f0.7820865974627469"
           width="800"
           height="600"
@@ -78,16 +78,23 @@ export default function Body() {
   return (
     <main>
       {/* Sección con video */}
-      <div className="relative w-full h-screen">
-        <video className="absolute top-0 left-0 w-full h-full object-contain" autoPlay loop muted>
-          <source src="/video.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <h1 className="text-white text-4xl md:text-6xl font-bold text-center">
+      <div className="relative w-full h-auto flex flex-col md:block">
+        {/* Video en versión desktop, encima del texto */}
+        <div className="relative w-full md:h-screen h-64 overflow-hidden">
+          <video className="absolute top-0 left-0 w-full h-full object-contain" autoPlay loop muted>
+            <source src="/video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 md:bg-black md:bg-opacity-50"></div>
+        </div>
+
+        {/* Texto debajo del video en móvil, encima en desktop */}
+        <div className="flex items-center justify-center px-6 py-10 md:absolute md:inset-0">
+          <h1 className="text-black md:text-white text-3xl md:text-6xl font-bold text-center">
             ¿Necesitas información de una propiedad? <br /> ¡Contáctanos y cumple tus sueños!
           </h1>
         </div>
       </div>
+
 
       {/* Secciones con animación de aparición */}
       <div className="container mx-auto py-20 space-y-20 p-10">
@@ -95,31 +102,18 @@ export default function Body() {
           <section
             key={id}
             id={id}
-            className={`p-10 bg-gray-100 rounded-lg shadow-lg transition-opacity duration-700 ${
+            className={` bg-gray-100 rounded-lg shadow-lg transition-opacity duration-700 ${
               visibleSections[id] ? "opacity-100" : "opacity-0"
             }`}
           >
-            <h2 className="text-3xl font-bold mb-4">{title}</h2>
-            {content && <p className="text-gray-700">{content}</p>}
+            <div className="p-10">
+              <h2 className="text-3xl font-bold mb-4">{title}</h2>
+              {content && <p className="text-gray-700">{content}</p>}
+            </div>
             <SectionContent id={id} />
           </section>
         ))}
       </div>
-
-      {/* Navegación
-      <nav className="bg-gray-900 text-white py-4 px-6 md:px-12 flex justify-center space-x-6 text-lg">
-        {["proyectos", "nosotros", "ubicacion", "contacto"].map((item) => (
-          <ScrollLink
-            key={item}
-            to={item}
-            smooth={true}
-            duration={700}
-            className="cursor-pointer hover:text-gray-400"
-          >
-            {item.charAt(0).toUpperCase() + item.slice(1)}
-          </ScrollLink>
-        ))}
-      </nav> */}
 
       {/* Botón para volver arriba */}
       {showScroll && (
